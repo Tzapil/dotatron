@@ -497,6 +497,16 @@
   resolved "https://npm.yandex-team.ru/@pkgjs%2fparseargs/-/parseargs-0.11.0.tgz?rbtorrent=03f029bc7eace2eb2da5999055257521f38ca896"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
+"@reduxjs/toolkit@^1.9.5":
+  version "1.9.5"
+  resolved "https://npm.yandex-team.ru/@reduxjs%2ftoolkit/-/toolkit-1.9.5.tgz?rbtorrent=e0df49ff2df64005fbccc39e589923fc47473ed7#d3987849c24189ca483baa7aa59386c8e52077c4"
+  integrity sha512-Rt97jHmfTeaxL4swLRNPD/zV4OxTes4la07Xc4hetpUW/vc75t5m1ANyxG6ymnEQ2FsLQsoMlYB2vV1sO3m8tQ==
+  dependencies:
+    immer "^9.0.21"
+    redux "^4.2.1"
+    redux-thunk "^2.4.2"
+    reselect "^4.1.8"
+
 "@sindresorhus/is@^4.0.0":
   version "4.6.0"
   resolved "https://npm.yandex-team.ru/@sindresorhus%2fis/-/is-4.6.0.tgz?rbtorrent=2a1c08eb908a193556b3cdfe71124806db621b42"
@@ -3304,6 +3314,11 @@ ignore@^5.2.0:
   resolved "https://npm.yandex-team.ru/ignore/-/ignore-5.2.4.tgz?rbtorrent=a588df528c0c5c23863dbd26e31254d91eeeb5e3"
   integrity sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==
 
+immer@^9.0.21:
+  version "9.0.21"
+  resolved "https://npm.yandex-team.ru/immer/-/immer-9.0.21.tgz?rbtorrent=93520ce7d7284fed91d60b4f48e4d9c7387c08d0#1e025ea31a40f24fb064f1fef23e931496330176"
+  integrity sha512-bc4NBHqOqSfRW7POMkHd51LvClaeMXpm8dx0e8oE2GORbq5aRK7Bxl4FyzVLdGtLmvLKL7BTDBG5ACQm4HWjTA==
+
 import-fresh@^3.0.0, import-fresh@^3.2.1:
   version "3.3.0"
   resolved "https://npm.yandex-team.ru/import-fresh/-/import-fresh-3.3.0.tgz?rbtorrent=ca56bbc60e7b2a6daef0a27d82b329c60a718e02"
@@ -4893,6 +4908,11 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://npm.yandex-team.ru/requires-port/-/requires-port-1.0.0.tgz?rbtorrent=32b2f205b3d00932e0055f7a3ea7d186b3277264"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+
+reselect@^4.1.8:
+  version "4.1.8"
+  resolved "https://npm.yandex-team.ru/reselect/-/reselect-4.1.8.tgz?rbtorrent=4bd8d66c7c87d3281380e597352f3d70f5b35257#3f5dc671ea168dccdeb3e141236f69f02eaec524"
+  integrity sha512-ab9EmR80F/zQTMNeneUr4cv+jSwPJgIlvEmVwLerwrWVbpLlBuls9XHzIeTFy4cegU2NHBp3va0LKOzU5qFEYQ==
 
 resolve-alpn@^1.0.0:
   version "1.2.1"
