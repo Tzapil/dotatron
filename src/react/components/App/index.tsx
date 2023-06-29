@@ -1,8 +1,19 @@
 import { connect } from 'react-redux';
+import { fetchHeroes, fetchHeroById } from '../../reducers/dota';
+
+import Dota from '../Dota';
+
 import './index.css';
+import { useEffect } from 'react';
 
 function App(reduxProps: any) {
   console.log('RENDER CALL', reduxProps);
+
+  // useEffect(() => {
+  //   reduxProps.fetchHeroes();
+  //   reduxProps.fetchHero(1);
+  // }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -19,6 +30,7 @@ function App(reduxProps: any) {
           Learn React
         </a>
       </header>
+      <Dota />
     </div>
   );
 }
@@ -27,4 +39,10 @@ const mapStateToProps = (state: any) => ({
   dota: state.dota
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch: any) => ({
+  fetchHero: (id: number) => dispatch(fetchHeroById(id)),
+  fetchHeroes: () => dispatch(fetchHeroes()),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

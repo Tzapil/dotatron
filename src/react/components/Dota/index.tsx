@@ -1,24 +1,33 @@
 import { connect } from 'react-redux';
-import './index.css';
+import { fetchHeroes, fetchHeroById } from '../../reducers/dota';
 
-function App(reduxProps: any) {
+import './index.css';
+import { useEffect } from 'react';
+
+function Dota(reduxProps: any) {
   console.log('RENDER CALL', reduxProps);
+
+  useEffect(() => {
+    reduxProps.fetchHeroes();
+    reduxProps.fetchHero(1);
+  }, []);
+
+  const heroes = reduxProps.dota.heroes;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={'lol'} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="Dota">
+      <div className="Heroes">
+        {heroes.map((hero: any) =>
+          <div className="Hero">
+            <div className="Hero-id">
+              {hero.id}
+            </div>
+            <div className="Hero-name">
+              {hero.name}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -27,4 +36,10 @@ const mapStateToProps = (state: any) => ({
   dota: state.dota
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch: any) => ({
+  fetchHero: (id: number) => dispatch(fetchHeroById(id)),
+  fetchHeroes: () => dispatch(fetchHeroes()),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dota);
