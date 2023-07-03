@@ -4,11 +4,15 @@ import {
     PayloadAction
 } from '@reduxjs/toolkit';
 import type { RootState } from '.';  
+import { fetchHeroes, fetchHeroMatchapsById, fetchHeroBenchmarksById, fetchHeroItemsById } from '../api';
+import { Heroes, HeroMatchup, HeroBenchmarks, HeroItemTimings } from '../api/types';
 
 // Define a type for the slice state
 export interface DotaState {
-    heroes: Object[];
-    hero: Object;
+    heroes: Heroes[];
+    hero_matchups: HeroMatchup[];
+    benchmarks: HeroBenchmarks | null;
+    items: HeroItemTimings[] | null;
     gpm: number;
     gold: number;
     exp: number;
@@ -21,7 +25,9 @@ export interface DotaState {
 // Define the initial state using that type
 const initialState: DotaState = {
     heroes: [],
-    hero: {},
+    hero_matchups: [],
+    benchmarks: null,
+    items: null,
     gpm: 0,
     gold: 0,
     exp: 0,
@@ -31,23 +37,31 @@ const initialState: DotaState = {
     information_fetching: false
 };
 
-export const fetchHeroes = createAsyncThunk(
+export const fetchHeroesThunk = createAsyncThunk(
     'dota/UPDATE_HEROES',
     async () => {
-        const response = await fetch(`https://api.opendota.com/api/heroes`);
-        const answer = await response.json();
-        return answer;
+        return await fetchHeroes();
     }
 );
 
-export const fetchHeroById = createAsyncThunk(
-    'dota/UPDATE_INFORMATION',
+export const fetchHeroMatchupsByIdThunk = createAsyncThunk(
+    'dota/UPDATE_INFORMATION_MATCHUP',
     async (heroId: number = 0) => {
-        // heroId = 0 = antimage
-        const response = await fetch(`https://api.opendota.com/api/heroes/${heroId}/matchups`);
-        console.log('REQUEST', response);
-        const answer = await response.json();
-        return answer;
+        return await fetchHeroMatchapsById(heroId);
+    }
+);
+
+export const fetchHeroBenchmarksByIdThunk = createAsyncThunk(
+    'dota/UPDATE_INFORMATION_BENCHMARKS',
+    async (heroId: number = 0) => {
+        return await fetchHeroBenchmarksById(heroId);
+    }
+);
+
+export const fetchHeroItemsByIdThunk = createAsyncThunk(
+    'dota/UPDATE_INFORMATION_ITEMS',
+    async (heroId: number = 0) => {
+        return await fetchHeroItemsById(heroId);
     }
 );
 
@@ -65,22 +79,21 @@ export const dotaSlice = createSlice({
         CHANGE_LAST_HIT: (state, action: PayloadAction<number>) => {
             state.last_hits = action.payload;
         },
-        // FETCH_INFORMATION: (state, _: PayloadAction<number>) => {
-        //     state.information_fetching = true;
-        // },
-        // UPDATE_INFORMATION: (state, action: PayloadAction<number>) => {
-        //     state.information_fetching = false;
-        //     state.gpm = action.payload;
-        // }
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
         builder
-            .addCase(fetchHeroById.fulfilled, (state, action) => {
-                state.hero = action.payload;
+            .addCase(fetchHeroMatchupsByIdThunk.fulfilled, (state, action) => {
+                state.hero_matchups = action.payload;
             })
-            .addCase(fetchHeroes.fulfilled, (state, action) => {
+            .addCase(fetchHeroesThunk.fulfilled, (state, action) => {
                 state.heroes = action.payload;
+            })
+            .addCase(fetchHeroBenchmarksByIdThunk.fulfilled, (state, action) => {
+                state.benchmarks = action.payload;
+            })
+            .addCase(fetchHeroItemsByIdThunk.fulfilled, (state, action) => {
+                state.items = action.payload;
             });
     },
 });
@@ -92,7 +105,9 @@ export const selectGold = (state: RootState) => state.dota.gold;
 export const selectExp = (state: RootState) => state.dota.exp;
 export const selectLastHits = (state: RootState) => state.dota.last_hits;
 export const selectGMP = (state: RootState) => state.dota.gpm;
-export const selectHero = (state: RootState) => state.dota.hero;
+export const selectHeroMatchups = (state: RootState) => state.dota.hero_matchups;
 export const selectHeroes = (state: RootState) => state.dota.heroes;
+export const selectBenchmarks = (state: RootState) => state.dota.benchmarks;
+export const selectItems = (state: RootState) => state.dota.items;
 
 export default dotaSlice.reducer;
