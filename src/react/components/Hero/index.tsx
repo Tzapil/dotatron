@@ -11,6 +11,7 @@ import {
 } from '../../reducers/dota';
 import { baseURL, MOST_POPULAR_ITEMS_AMOUNT, HIGHEST_WINRATE_ITEMS_AMOUNT } from '../../const';
 import { findHero } from '../../utils';
+import Matchups from '../Matchups';
 
 import './index.css';
 
@@ -74,9 +75,11 @@ function Hero(reduxProps: any) {
                 <img src={baseURL + hero.img} />
             </div>
             <div className="Hero-attack_type">
+                <span className="Hero-attack_type_title">Attack type:</span>
                 {hero.attack_type}
             </div>
             <div className="Hero-primary_attr">
+                <span className="Hero-primary_attr_title">Primary Attribute:</span>
                 {hero.primary_attr}
             </div>
             <div className="Hero-1pick_winrate">
@@ -89,27 +92,8 @@ function Hero(reduxProps: any) {
                     </div>
                 )}
             </div>
-            <div className="Hero-matchups">
-                <div>Worst</div>
-                {heroMatchupsWorst.map((hero: any) =>
-                    <div className="Hero-matchup">
-                        <img src={baseURL + hero.icon} />
-                        {hero.localized_name}
-                        {hero.winrate}
-                    </div>
-                )}
-            </div>
-            <div className="Hero-matchups">
-            <div>Best</div>
-                {heroMatchupsBest.map((hero: any) =>
-                    <div className="Hero-matchup">
-                        <img src={baseURL + hero.icon} />
-                        {hero.localized_name}
-                        {hero.winrate}
-                    </div>
-                )}
-            </div>
-            
+            <Matchups title='Best' matchups={heroMatchupsBest} />
+            <Matchups title='Worst' matchups={heroMatchupsWorst} />
         </div>
     );
 }

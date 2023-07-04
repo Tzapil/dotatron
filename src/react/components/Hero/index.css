@@ -17,6 +17,22 @@
     padding-right: 4px;
 }
 
+.Hero-attack_type {
+    font-size: 14px;
+}
+
+.Hero-attack_type_title {
+    padding-right: 6px;
+}
+
+.Hero-primary_attr {
+    font-size: 14px;
+}
+
+.Hero-primary_attr_title {
+    padding-right: 6px;
+}
+
 .BackButton {
     position: absolute;
     right: 0;

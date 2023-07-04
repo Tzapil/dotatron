@@ -1,0 +1,30 @@
+.Matchups-list {
+    display: flex;
+}
+
+.Matchups-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45px;
+}
+
+.Matchups-item-icon {
+    width: 31px;
+    height: 31px;
+    border: 1px solid black;
+}
+
+.Matchups-item-name {
+    font-size: 6px;
+    white-space: nowrap;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: center;
+}
+
+.Matchups-item-winrate {
+    font-size: 8px;
+    color: gray;
+}
