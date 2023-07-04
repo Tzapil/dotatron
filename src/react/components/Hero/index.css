@@ -1,0 +1,30 @@
+.Hero {
+    margin-left: 10px;
+}
+
+.Hero-title {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.Hero-roles {
+    font-size: 12px;
+    display: flex;
+    color: gray;
+}
+
+.Hero-role {
+    padding-right: 4px;
+}
+
+.BackButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+
+    text-decoration: none;
+    color: black;
+}

@@ -1,0 +1,38 @@
+.HeroList {
+    margin-left: 10px;
+}
+
+.HeroList-title {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.HeroList-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.HeroList-item-icon {
+    width: 32px;
+    height: 32px;
+    padding-right: 8px;
+}
+
+.HeroList-item-name {
+    padding-right: 8px;
+}
+
+.HeroList-item:hover .HeroList-item-name {
+    text-decoration: underline;
+}
+
+.HeroList-item-roles {
+    font-size: 12px;
+    display: flex;
+    color: gray;
+}
+
+.HeroList-item-role {
+    padding-right: 4px;
+}

@@ -75,7 +75,12 @@ export const fetchHeroesStatsThunk = createAsyncThunk(
 export const fetchHeroMatchupsByIdThunk = createAsyncThunk(
     'dota/UPDATE_INFORMATION_MATCHUP',
     async (heroId: number = 0) => {
-        return await fetchHeroMatchapsById(heroId);
+        const data = await fetchHeroMatchapsById(heroId);
+        return data
+            .map(item => ({
+                ...item,
+                winrate: Math.floor(Number(item.wins) / Number(item.games_played) * 100),
+            }))
     }
 );
 
