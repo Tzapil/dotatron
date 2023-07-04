@@ -59,8 +59,9 @@ export interface HeroItemTimings {
     hero_id: number;
     item: string;
     time: number;
-    games: string;
-    wins: string;
+    games: number;
+    wins: number;
+    winrate: number;
 };
 
 export interface LaneRoles {

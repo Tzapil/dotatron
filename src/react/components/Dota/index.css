@@ -1,0 +1,38 @@
+.Heroes {
+    margin-left: 10px;
+}
+
+.Hero-title {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.Hero {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.Hero-icon {
+    width: 32px;
+    height: 32px;
+    padding-right: 8px;
+}
+
+.Hero-name {
+    padding-right: 8px;
+}
+
+.Hero:hover .Hero-name {
+    text-decoration: underline;
+}
+
+.Hero-roles {
+    font-size: 12px;
+    display: flex;
+    color: gray;
+}
+
+.Hero-role {
+    padding-right: 4px;
+}
