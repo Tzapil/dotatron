@@ -7,6 +7,15 @@ import Matchups from '../Matchups';
 
 import './index.css';
 
+const AttrMap: Record<string, string> = {
+    str: 'Strength',
+    agi: 'Agility',
+    int: 'Intellect',
+    all: 'Universal'
+};
+
+const Attributes = ['str', 'agi', 'int'];
+
 function Hero(reduxProps: any) {
     const { id: heroId } = useParams();
     console.log('HERO ROUTER CALL', heroId, reduxProps);
@@ -43,36 +52,47 @@ function Hero(reduxProps: any) {
     const firstPickWR = Math.floor(hero['1_win'] / hero['1_pick'] * 100);
     return (
         <div className="Hero">
-            <h3 className="Hero-title"> Hero: </h3>
-            <Link to='/'>
-                <div className="BackButton">X</div>
-            </Link>
-            <div className='Hero-name'>
-                {hero.localized_name}
+            <h3 className="Hero-title">
+                <span className="Hero-title-name">{hero.localized_name}</span>
+                <span className="Hero-title-roles">
+                    {hero.roles.map((role: any) =>
+                        <div className="Hero-role">
+                            {role}
+                        </div>
+                    )}
+                </span>
+            </h3>
+            <div className="Hero-info">
+                <div className="Hero-attack_type">
+                    <span className="Hero-attack_type_text">{hero.attack_type}</span>
+                    <img className='Hero-attack_type_icon' src={`../images/attack/${hero.attack_type}.webp`} />
+                </div>
+                <div className="Hero-primary_attr">
+                    <span className='Hero-primary_attr_text'>{AttrMap[hero.primary_attr]}</span>
+                    <img className='Hero-primary_attr_icon' src={`../images/attributes/${hero.primary_attr}.webp`} />
+                </div>
             </div>
-            <div className="Hero-image">
-                <img src={baseURL + hero.img} />
-            </div>
-            <div className="Hero-attack_type">
-                <span className="Hero-attack_type_title">Attack type:</span>
-                {hero.attack_type}
-            </div>
-            <div className="Hero-primary_attr">
-                <span className="Hero-primary_attr_title">Primary Attribute:</span>
-                {hero.primary_attr}
-            </div>
-            <div className="Hero-1pick_winrate">
-                {`${firstPickWR}%`}
-            </div>
-            <div className="Hero-roles">
-                {hero.roles.map((role: any) =>
-                    <div className="Hero-role">
-                        {role}
+            
+            <img className="Hero-image" src={baseURL + hero.img} />
+
+            <div className="Hero-attributes">
+                {Attributes.map(attr =>
+                    <div className="Hero-attributes-item">
+                        <img className='Hero-attributes-item_icon' src={`../images/attributes/${attr}.webp`} />
+                        <span className='Hero-attributes-item_text' >{hero[`base_${attr}`]}+{hero[`${attr}_gain`]}</span>
                     </div>
                 )}
             </div>
+
+            <div className="Hero-1pick_winrate">
+                {`${firstPickWR}%`}
+            </div>
             <Matchups title='Best' matchups={heroMatchupsBest} />
             <Matchups title='Worst' matchups={heroMatchupsWorst} />
+
+            <Link to='/'>
+                <div className="BackButton">X</div>
+            </Link>
         </div>
     );
 }

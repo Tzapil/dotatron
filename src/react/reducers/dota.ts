@@ -5,7 +5,6 @@ import {
 } from '@reduxjs/toolkit';
 import type { RootState } from '.';  
 import {
-    fetchHeroes,
     fetchHeroesStats,
     fetchHeroMatchapsById,
     fetchHeroBenchmarksById,
@@ -13,7 +12,6 @@ import {
     fetchHeroItemsTimingsById
 } from '../api';
 import {
-    Heroes,
     HeroStats,
     HeroItems,
     HeroMatchup,
@@ -50,18 +48,18 @@ export interface DotaState {
 };
 
 // Define the initial state using that type
-const initialState: DotaState = //DOTA_STAB as unknown as DotaState;
-{
-    heroes: {},
-    heroesLoaded: false,
-    gpm: 0,
-    gold: 0,
-    exp: 0,
-    expected_gold: 0,
-    expected_exp: 0,
-    last_hits: 0,
-    information_fetching: false
-};
+const initialState: DotaState = DOTA_STAB as unknown as DotaState;
+// {
+//     heroes: {},
+//     heroesLoaded: false,
+//     gpm: 0,
+//     gold: 0,
+//     exp: 0,
+//     expected_gold: 0,
+//     expected_exp: 0,
+//     last_hits: 0,
+//     information_fetching: false
+// };
 
 export const fetchHeroesStatsThunk = createAsyncThunk(
     'dota/UPDATE_HEROES_STATS',

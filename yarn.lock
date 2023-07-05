@@ -1747,6 +1747,18 @@ cookie@0.5.0:
   resolved "https://npm.yandex-team.ru/cookie/-/cookie-0.5.0.tgz?rbtorrent=9ea7f36cc236f7fc6ada36df16835e3e44933e41"
   integrity sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==
 
+copy-webpack-plugin@^11.0.0:
+  version "11.0.0"
+  resolved "https://npm.yandex-team.ru/copy-webpack-plugin/-/copy-webpack-plugin-11.0.0.tgz?rbtorrent=f460250f3ef22d3169f0b847686ef435ab26f1f2#96d4dbdb5f73d02dd72d0528d1958721ab72e04a"
+  integrity sha512-fX2MWpamkW0hZxMEg0+mYnA40LTosOSa5TqZ9GYIBzyJa9C3QUaMPSE2xAi/buNr8u89SfD9wHSQVBzrRa/SOQ==
+  dependencies:
+    fast-glob "^3.2.11"
+    glob-parent "^6.0.1"
+    globby "^13.1.1"
+    normalize-path "^3.0.0"
+    schema-utils "^4.0.0"
+    serialize-javascript "^6.0.0"
+
 core-util-is@~1.0.0:
   version "1.0.3"
   resolved "https://npm.yandex-team.ru/core-util-is/-/core-util-is-1.0.3.tgz?rbtorrent=d27ee558e50b9ed57445f731d176aea0c42859fd"
@@ -2564,7 +2576,7 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   resolved "https://npm.yandex-team.ru/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz?rbtorrent=8855b8355a43a0b4004382ab3b8abca525a2cf83"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
-fast-glob@^3.2.7, fast-glob@^3.2.9:
+fast-glob@^3.2.11, fast-glob@^3.2.7, fast-glob@^3.2.9:
   version "3.2.12"
   resolved "https://npm.yandex-team.ru/fast-glob/-/fast-glob-3.2.12.tgz?rbtorrent=5c4bce6846d6a992a1d9ab9aef99ce2a688b4a4f"
   integrity sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==
@@ -2936,7 +2948,7 @@ glob-parent@^5.1.2, glob-parent@~5.1.2:
   dependencies:
     is-glob "^4.0.1"
 
-glob-parent@^6.0.2:
+glob-parent@^6.0.1, glob-parent@^6.0.2:
   version "6.0.2"
   resolved "https://npm.yandex-team.ru/glob-parent/-/glob-parent-6.0.2.tgz?rbtorrent=7590272c760bda1cdac237139f18d8c1b02463a3"
   integrity sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==
@@ -3028,6 +3040,17 @@ globby@^11.1.0:
     ignore "^5.2.0"
     merge2 "^1.4.1"
     slash "^3.0.0"
+
+globby@^13.1.1:
+  version "13.2.0"
+  resolved "https://npm.yandex-team.ru/globby/-/globby-13.2.0.tgz?rbtorrent=a7fbaf5f8332f4e4bbdc6e0f4f6c4bc5b7c4092d#7dd5678d765c4680c2e6d106230d86cb727cb1af"
+  integrity sha512-jWsQfayf13NvqKUIL3Ta+CIqMnvlaIDFveWE/dpOZ9+3AMEJozsxDvKA02zync9UuvOM8rOXzsD5GqKP4OnWPQ==
+  dependencies:
+    dir-glob "^3.0.1"
+    fast-glob "^3.2.11"
+    ignore "^5.2.0"
+    merge2 "^1.4.1"
+    slash "^4.0.0"
 
 gopd@^1.0.1:
   version "1.0.1"
@@ -5153,7 +5176,7 @@ serialize-error@^7.0.1:
   dependencies:
     type-fest "^0.13.1"
 
-serialize-javascript@^6.0.1:
+serialize-javascript@^6.0.0, serialize-javascript@^6.0.1:
   version "6.0.1"
   resolved "https://npm.yandex-team.ru/serialize-javascript/-/serialize-javascript-6.0.1.tgz?rbtorrent=6117dd9d8a7bf9dc501e4469ce566a5c8a9888c1"
   integrity sha512-owoXEFjWRllis8/M1Q+Cw5k8ZH40e3zhp/ovX+Xr/vi1qj6QesbyXXViFbpNvWvPNAD62SutwEXavefrLJWj7w==
@@ -5257,6 +5280,11 @@ slash@^3.0.0:
   version "3.0.0"
   resolved "https://npm.yandex-team.ru/slash/-/slash-3.0.0.tgz?rbtorrent=19a89c4aba1b97e1acaf017bc38adc140804b70e"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
+
+slash@^4.0.0:
+  version "4.0.0"
+  resolved "https://npm.yandex-team.ru/slash/-/slash-4.0.0.tgz?rbtorrent=e9e08de36fb5297c4397564d9b2c38bb9286ba81#2422372176c4c6c5addb5e2ada885af984b396a7"
+  integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
 
 slice-ansi@^3.0.0:
   version "3.0.0"

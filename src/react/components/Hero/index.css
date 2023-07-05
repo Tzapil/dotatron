@@ -2,12 +2,40 @@
     margin-left: 10px;
 }
 
+.Hero-info {
+    display: flex;
+    font-size: 12px;
+    line-height: 16px;
+    height: 16px;
+    margin-bottom: 10px;
+    color: darkslategray;
+}
+
+.Hero-attack_type {
+    margin-right: 10px;
+    display: flex;
+}
+
+.Hero-attack_type_text {
+    padding-right: 6px;
+}
+
+.Hero-attack_type_icon {
+    width: 16px;
+    height: 16px;
+}
+
 .Hero-title {
     text-align: left;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.Hero-roles {
+.Hero-title-name {
+    margin-right: 10px;
+}
+
+.Hero-title-roles {
     font-size: 12px;
     display: flex;
     color: gray;
@@ -17,20 +45,46 @@
     padding-right: 4px;
 }
 
-.Hero-attack_type {
-    font-size: 14px;
-}
-
-.Hero-attack_type_title {
-    padding-right: 6px;
-}
-
 .Hero-primary_attr {
-    font-size: 14px;
+    display: flex;
 }
 
-.Hero-primary_attr_title {
+.Hero-primary_attr_text {
     padding-right: 6px;
+}
+
+.Hero-primary_attr_icon {
+    width: 16px;
+    height: 16px;
+}
+
+.Hero-image {
+    width: 200px;
+    height: 112px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.Hero-attributes {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.Hero-attributes-item {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.Hero-attributes-item_icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.Hero-attributes-item_text {
+    color: slategrey;
 }
 
 .BackButton {
