@@ -1,5 +1,6 @@
 import { HeroStats } from "../api/types";
+import { HeroData } from '../reducers/dota';
 
-export function findHero(id: number, heroes: HeroStats[]) {
-    return heroes.find((hero: HeroStats) => hero.id === id);
+export function findHero(id: number, heroes: Record<number, HeroData>) {
+    return heroes[id];
 }

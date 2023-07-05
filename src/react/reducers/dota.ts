@@ -23,14 +23,23 @@ import {
 
 import { DOTA_STAB } from '../const';
 
-// Define a type for the slice state
-export interface DotaState {
-    heroes: Heroes[];
-    heroes_stats: HeroStats[];
+export interface HeroExtra {
     hero_matchups: HeroMatchup[];
     benchmarks: HeroBenchmarks | null;
     items: HeroItems | null;
     items_timings: HeroItemTimings[];
+    loaded: boolean;
+};
+
+export interface HeroData {
+    main: HeroStats | null;
+    extra: HeroExtra;
+};
+
+// Define a type for the slice state
+export interface DotaState {
+    heroes: Record<number, HeroData>;
+    heroesLoaded: boolean;
     gpm: number;
     gold: number;
     exp: number;
@@ -41,34 +50,63 @@ export interface DotaState {
 };
 
 // Define the initial state using that type
-const initialState: DotaState = DOTA_STAB as unknown as DotaState;
-// {
-//     heroes: [],
-//     heroes_stats: [],
-//     hero_matchups: [],
-//     benchmarks: null,
-//     items_timings: [],
-//     items: null,
-//     gpm: 0,
-//     gold: 0,
-//     exp: 0,
-//     expected_gold: 0,
-//     expected_exp: 0,
-//     last_hits: 0,
-//     information_fetching: false
-// };
-
-export const fetchHeroesThunk = createAsyncThunk(
-    'dota/UPDATE_HEROES',
-    async () => {
-        return await fetchHeroes();
-    }
-);
+const initialState: DotaState = //DOTA_STAB as unknown as DotaState;
+{
+    heroes: {},
+    heroesLoaded: false,
+    gpm: 0,
+    gold: 0,
+    exp: 0,
+    expected_gold: 0,
+    expected_exp: 0,
+    last_hits: 0,
+    information_fetching: false
+};
 
 export const fetchHeroesStatsThunk = createAsyncThunk(
     'dota/UPDATE_HEROES_STATS',
     async () => {
         return await fetchHeroesStats();
+    },
+    {
+        condition: (_, { getState, extra }) => {
+            // TODO any
+            const dota = (getState() as any).dota as DotaState;
+            // Не делаем повторные запросы
+            if (dota.heroesLoaded) {
+                return false;
+            }
+        },
+    }
+);
+
+export const fetchHeroByIdThunk = createAsyncThunk(
+    'dota/UPDATE_HERO',
+    async (heroId: number = 0) => {
+        const promise = Promise.all([
+            fetchHeroMatchapsById(heroId),
+            fetchHeroItemsTimingsById(heroId),
+            fetchHeroItemsById(heroId),
+            fetchHeroBenchmarksById(heroId)
+        ]);
+        return await promise;
+    },
+    {
+        condition: (heroId, { getState, extra }) => {
+            // TODO any
+            const dota = (getState() as any).dota as DotaState;
+            // Не делаем повторные запросы
+            console.log('CHECK CONDITION');
+            console.log(dota.heroes[heroId], dota.heroes[heroId]?.extra?.loaded)
+            if (dota.heroes[heroId]?.extra?.loaded) {
+                return false;
+            }
+            // TODO Save fetch status
+            // if (fetchStatus === 'fulfilled' || fetchStatus === 'loading') {
+            //     // Already fetched or in progress, don't need to re-fetch
+            //     return false
+            // }
+        },
     }
 );
 
@@ -76,11 +114,7 @@ export const fetchHeroMatchupsByIdThunk = createAsyncThunk(
     'dota/UPDATE_INFORMATION_MATCHUP',
     async (heroId: number = 0) => {
         const data = await fetchHeroMatchapsById(heroId);
-        return data
-            .map(item => ({
-                ...item,
-                winrate: Math.floor(Number(item.wins) / Number(item.games_played) * 100),
-            }))
+        return data;
     }
 );
 
@@ -102,16 +136,7 @@ export const fetchHeroItemsTimingsByIdThunk = createAsyncThunk(
     'dota/UPDATE_INFORMATION_ITEMS_TIMINGS',
     async (heroId: number = 0) => {
         const data = await fetchHeroItemsTimingsById(heroId);
-
-        // Фильтруем сразу. Игр с предметом в базе > 20 и винрейт > 50%
-        // TODO сортировать по таймингам?
-        return data
-            .map(item => ({
-                ...item,
-                wins: Number(item.wins),
-                games: Number(item.games),
-                winrate: Math.floor(Number(item.wins) / Number(item.games) * 100),
-            }))
+        return data;
     }
 );
 
@@ -133,23 +158,49 @@ export const dotaSlice = createSlice({
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
         builder
-            .addCase(fetchHeroesThunk.fulfilled, (state, action) => {
-                state.heroes = action.payload;
-            })
             .addCase(fetchHeroesStatsThunk.fulfilled, (state, action) => {
-                state.heroes_stats = action.payload;
+                const heroes = action.payload;
+                state.heroesLoaded = true;
+                state.heroes = heroes.reduce((acc: Record<number, HeroData>, hero: HeroStats) => {
+                    acc[hero.id] = {
+                        main: hero,
+                        extra: {
+                            hero_matchups: [],
+                            benchmarks: null,
+                            items: null,
+                            items_timings: [],
+                            loaded: false,
+                        },
+                    };
+                    return acc;
+                }, {} as Record<number, HeroData>);
             })
             .addCase(fetchHeroMatchupsByIdThunk.fulfilled, (state, action) => {
-                state.hero_matchups = action.payload;
+                const heroId = action.meta.arg;
+                state.heroes[heroId].extra.hero_matchups = action.payload;
             })
             .addCase(fetchHeroBenchmarksByIdThunk.fulfilled, (state, action) => {
-                state.benchmarks = action.payload;
+                const heroId = action.meta.arg;
+                state.heroes[heroId].extra.benchmarks = action.payload;
             })
             .addCase(fetchHeroItemsByIdThunk.fulfilled, (state, action) => {
-                state.items = action.payload;
+                const heroId = action.meta.arg;
+                state.heroes[heroId].extra.items = action.payload;
             })
             .addCase(fetchHeroItemsTimingsByIdThunk.fulfilled, (state, action) => {
-                state.items_timings = action.payload;
+                const heroId = action.meta.arg;
+                state.heroes[heroId].extra.items_timings = action.payload;
+            })
+            .addCase(fetchHeroByIdThunk.fulfilled, (state, action) => {
+                const heroId = action.meta.arg;
+                const [hero_matchups, items_timings, items, benchmarks] = action.payload;
+                state.heroes[heroId].extra = {
+                    hero_matchups,
+                    benchmarks,
+                    items,
+                    items_timings,
+                    loaded: true
+                };
             });
     },
 });
@@ -161,11 +212,11 @@ export const selectGold = (state: RootState) => state.dota.gold;
 export const selectExp = (state: RootState) => state.dota.exp;
 export const selectLastHits = (state: RootState) => state.dota.last_hits;
 export const selectGMP = (state: RootState) => state.dota.gpm;
-export const selectHeroMatchups = (state: RootState) => state.dota.hero_matchups;
+// export const selectHeroMatchups = (state: RootState) => state.dota.hero_matchups;
 export const selectHeroes = (state: RootState) => state.dota.heroes;
-export const selectHeroesStats = (state: RootState) => state.dota.heroes_stats;
-export const selectBenchmarks = (state: RootState) => state.dota.benchmarks;
-export const selectItems = (state: RootState) => state.dota.items;
-export const selectItemsTimings = (state: RootState) => state.dota.items_timings;
+export const selectHeroesStats = (state: RootState) => state.dota.heroes;
+// export const selectBenchmarks = (state: RootState) => state.dota.benchmarks;
+// export const selectItems = (state: RootState) => state.dota.items;
+// export const selectItemsTimings = (state: RootState) => state.dota.items_timings;
 
 export default dotaSlice.reducer;

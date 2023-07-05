@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
-  fetchHeroesThunk,
   fetchHeroesStatsThunk,
   fetchHeroItemsByIdThunk,
   fetchHeroMatchupsByIdThunk,

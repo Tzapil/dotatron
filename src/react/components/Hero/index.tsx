@@ -1,16 +1,8 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
-import {
-  fetchHeroesThunk,
-  fetchHeroesStatsThunk,
-  fetchHeroItemsByIdThunk,
-  fetchHeroMatchupsByIdThunk,
-  fetchHeroBenchmarksByIdThunk,
-  fetchHeroItemsTimingsByIdThunk
-} from '../../reducers/dota';
-import { baseURL, MOST_POPULAR_ITEMS_AMOUNT, HIGHEST_WINRATE_ITEMS_AMOUNT } from '../../const';
-import { findHero } from '../../utils';
+import { fetchHeroByIdThunk } from '../../reducers/dota';
+import { baseURL } from '../../const';
 import Matchups from '../Matchups';
 
 import './index.css';
@@ -19,41 +11,28 @@ function Hero(reduxProps: any) {
     const { id: heroId } = useParams();
     console.log('HERO ROUTER CALL', heroId, reduxProps);
 
-    // useEffect(() => {
-    // // reduxProps.fetchHeroes();
-    // // reduxProps.fetchHero(juggernautID);
-    // reduxProps.fetchData(juggernautID);
-    // }, []);
+    useEffect(() => {
+        reduxProps.fetchData(heroId);
+    }, [heroId]);
 
-    // const heroes = reduxProps.dota.heroes;
-    // const heroes_stats = reduxProps.dota.heroes_stats;
-
-    // let timings = [...reduxProps.dota.items_timings];
-    // timings.sort((a, b) => a.time - b.time);
-    // // timings.sort((a, b) => b.games - a.games);
-    // // timings = timings.slice(0, MOST_POPULAR_ITEMS_AMOUNT);
-    // // timings.sort((a, b) => b.winrate - a.winrate);
-    // // timings = timings.slice(0, HIGHEST_WINRATE_ITEMS_AMOUNT);
-    // console.log('TIMINGS');
-    // console.log(timings);
-
-    const heroes_stats = reduxProps.dota.heroes_stats;
-    const hero = findHero(Number(heroId), heroes_stats);
+    const heroes = reduxProps.dota.heroes;
+    const heroData = heroes[heroId];
+    const hero = heroData.main;
 
     console.log('HERO DATA', hero);
 
-    const heroMatchups = [...reduxProps.dota.hero_matchups];
+    const heroMatchups = [...heroData.extra.hero_matchups];
     heroMatchups.sort((a, b) => a.winrate - b.winrate);
     // hero_id
     const heroMatchupsWorst = heroMatchups.slice(0, 7).map((hero: any) => {
         return {
-            ...findHero(hero.hero_id, heroes_stats),
+            ...reduxProps.dota.heroes[hero.hero_id].main,
             winrate: hero.winrate
         };
     });
     const heroMatchupsBest = heroMatchups.slice(heroMatchups.length - 7, heroMatchups.length).map((hero: any) => {
         return {
-            ...findHero(hero.hero_id, heroes_stats),
+            ...reduxProps.dota.heroes[hero.hero_id].main,
             winrate: hero.winrate
         };
     });
@@ -99,20 +78,13 @@ function Hero(reduxProps: any) {
 }
 
 const mapStateToProps = (state: any) => ({
-  dota: state.dota
+    dota: state.dota
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  // fetchHero: (id: number) => dispatch(fetchHeroItemsByIdThunk(id)),
-  // fetchHeroes: () => dispatch(fetchHeroesThunk()),
-  fetchData: (id: number) => {
-    // dispatch(fetchHeroesThunk());
-    // dispatch(fetchHeroesStatsThunk());
-    // dispatch(fetchHeroItemsByIdThunk(id));
-    // dispatch(fetchHeroItemsTimingsByIdThunk(id));
-    // dispatch(fetchHeroBenchmarksByIdThunk(id));
-    // dispatch(fetchHeroMatchupsByIdThunk(id));
-  }
+    fetchData: (id: number) => {
+        dispatch(fetchHeroByIdThunk(id));
+    }
 });
 
 
